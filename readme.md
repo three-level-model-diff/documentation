@@ -56,7 +56,11 @@ Removal of a string of characters (markup included)
 ```
 # 2. Structural operations
 
+The operation at structural level are sequence of one or more mechanical operations.
+
 ## 3.1 Operations on text
+
+Operation on text are within the same markup node. 
 
 ### 3.1.1. Punctuation
 
@@ -301,4 +305,177 @@ Replace of a string of more words (markup excluded)
 }
 ```
 
+## 2.2. Operazioni sul markup
 
+### 2.2.1. NOOP
+
+```
+Non-relevant change within markup 
+{ 
+  "id": "structural-10017",
+  "op": "NOOP",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-10060",
+        "op":"DEL", 
+        "pos": 215, 
+        "content": "<p id='x45' class='test'>" 
+  },{ 
+        "id" : "edit-00060",
+        "op":"INS", 
+        "pos": 215, 
+        "content": "<p class='test' id='x45'>"  
+  }]
+}
+```
+```
+Non-relevant change within text 
+{ 
+  "id": "structural-10018",
+  "op": "NOOP", 
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-10061",
+        "op":"INS", 
+        "pos": 255, 
+        "content": "\n   " 
+  }]
+}
+```
+
+### 2.2.2. Insert / Delete
+
+```
+Insert of one or more nodes in the document (eventually also text before/after nodes)
+{ 
+  "id": "structural-00017",
+  "op": "INSERT",
+  "new": "Some text [...] more text",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00060",
+        "op":"INS", 
+        "pos": 215, 
+        "content": "<p>Some text</p><p>Some more text</p>" 
+  }]
+}
+```
+```
+{ 
+  "id": "structural-00019",
+  "op": "INSERT", 
+  "new": "for instance [...] all are new.",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00062",
+        "op":"INS", 
+        "pos": 275, 
+        "content": "for instance: </p><p>Some text</p><p>Some more text</p><p>These all are new." 
+  }]
+}
+```
+```
+
+Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo prima e/o dopo ai nodi
+{ 
+  "id": "structural-00018",
+  "op": "DELETE", 
+  "old": "Some text [...] I don't like",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00061",
+        "op":"DEL", 
+        "pos": 255, 
+        "content": "<p>Some text to throw away</p><p>Some more text I don't like</p>" 
+  }]
+}
+```
+```
+{ 
+  "id": "structural-00020",
+  "op": "DELETE", 
+  "old": "for instance: [...] must go.",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00063",
+        "op":"DEL", 
+        "pos": 307, 
+        "content": "for instance: </p><p>Some text</p><p>Some more text</p><p>These all must go." 
+  }]
+}
+```
+### 2.2.3. Move
+
+```
+{ 
+  "id": "structural-00021",
+  "op": "MOVE", 
+  "old": "Some text that goes away",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00064",
+        "op":"DEL", 
+        "pos": 215, 
+        "content": "<p>Some text that goes away</p>" 
+  },{ 
+        "id" : "edit-00065",
+        "op":"INS", 
+        "pos": 247, 
+        "content": "<p>Some text that goes away</p>" 
+  }]
+}
+```
+
+### 2.2.4. Wrap / Unwrap
+
+```
+{ 
+  "id": "structural-00022",
+  "op": "WRAP", 
+  "old": "the content of the node",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00065",
+        "op":"INS", 
+        "pos": 535, 
+        "content": "<i>" 
+  },{ 
+        "id" : "edit-00066",
+        "op":"INS", 
+        "pos": 540, 
+        "content": "</i>" 
+  }]
+}
+```
+```
+{ 
+  "id": "structural-00023",
+  "op": "UNWRAP", 
+  "old": "<i>the content of the node</i>",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00067",
+        "op":"DEL", 
+        "pos": 535, 
+        "content": "<i>" 
+  },{ 
+        "id" : "edit-00068",
+        "op":"DEL", 
+        "pos": 540, 
+        "content": "</i>" 
+  }]
+}
+```
+
+### 2.2.5. Join / Split
+
+### 2.2.6. Replace
