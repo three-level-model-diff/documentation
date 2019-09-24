@@ -1,5 +1,9 @@
 # Table of content
 
+[Mechanic operations](https://github.com/three-level-model-diff/documentation#1-mechanical-operations)
+[Structural operations](https://github.com/three-level-model-diff/documentation#2-structural-operations)
+[Semantic operations]()
+
 # 1. Mechanical operations
 There are only two mechanical operations: INS and DEL. 
 Mechanical operations act EXCLUSIVELY at string level: markup operations are still expressed as INS and DEL.
@@ -58,11 +62,11 @@ Removal of a string of characters (markup included)
 
 The operation at structural level are sequence of one or more mechanical operations.
 
-## 3.1 Operations on text
+## 2.1 Operations on text
 
 Operation on text are within the same markup node. 
 
-### 3.1.1. Punctuation
+### 2.1.1. Punctuation
 
 ```
 Modification of punctuation only.
@@ -87,7 +91,7 @@ Modification of punctuation only.
 }
 ```
 
-### 3.1.2 Wordchange
+### 2.1.2 Wordchange
 
 ```
 Change of a single word without changing the overall meaning (change or a spell fix). All inserts/replace are within a single word.
@@ -477,5 +481,21 @@ Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo pr
 ```
 
 ### 2.2.5. Join / Split
+
+```
+{ 
+  "id": "structural-00026",
+  "op": "JOIN", 
+  "old": "First[...]paragraph.",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00072",
+        "op":"DEL", 
+        "pos": 512, 
+        "content": "</p><p>" 
+  }]
+}
+```
 
 ### 2.2.6. Replace
