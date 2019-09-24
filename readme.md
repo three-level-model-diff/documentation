@@ -2,7 +2,7 @@
 
 * [Mechanic operations](https://github.com/three-level-model-diff/documentation#1-mechanical-operations)
 * [Structural operations](https://github.com/three-level-model-diff/documentation#2-structural-operations)
-* [Semantic operations]()
+* [Semantic operations](https://github.com/three-level-model-diff/documentation/blob/master/readme.md#3-semantic-operations)
 
 # 1. Mechanical operations
 There are only two mechanical operations: INS and DEL. 
