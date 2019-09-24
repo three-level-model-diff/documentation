@@ -1,8 +1,8 @@
 # Table of content
 
-[Mechanic operations](https://github.com/three-level-model-diff/documentation#1-mechanical-operations)
-[Structural operations](https://github.com/three-level-model-diff/documentation#2-structural-operations)
-[Semantic operations]()
+* [Mechanic operations](https://github.com/three-level-model-diff/documentation#1-mechanical-operations)
+* [Structural operations](https://github.com/three-level-model-diff/documentation#2-structural-operations)
+* [Semantic operations]()
 
 # 1. Mechanical operations
 There are only two mechanical operations: INS and DEL. 
@@ -10,8 +10,9 @@ Mechanical operations act EXCLUSIVELY at string level: markup operations are sti
 
 ## 1.1 Insertion (INS)
 
-```
 Insertion of a string of characters (markup included)
+
+```
 {
   "id": "edit-00001",
   "op": "INS",
@@ -35,8 +36,8 @@ Insertion of a string of characters (markup included)
 ```
 ## 1.2 Delete (DEL)
 
-```
 Removal of a string of characters (markup included)
+```
 {
   "id": "edit-00002",
   "op": "DEL",
@@ -68,8 +69,9 @@ Operation on text are within the same markup node.
 
 ### 2.1.1. Punctuation
 
-```
 Modification of punctuation only.
+
+```
 { 
   "id": "structural-00010",
   "op": "PUNCTUATION", 
@@ -93,8 +95,9 @@ Modification of punctuation only.
 
 ### 2.1.2 Wordchange
 
-```
 Change of a single word without changing the overall meaning (change or a spell fix). All inserts/replace are within a single word.
+
+```
 { 
   "id": "structural-00011",
   "op": "WORDCHANGE", 
@@ -180,6 +183,8 @@ Change of a single word without changing the overall meaning (change or a spell 
 ```
 ### 2.1.3 Wordreplace
 
+Substitution of an entire single word.
+
 ```
 { 
   "id": "structural-00013",
@@ -251,8 +256,9 @@ Change of a single word without changing the overall meaning (change or a spell 
 
 ### 2.1.4 Textinsert / Textdelete
 
-```
 Insert of a string made of more words (markup excluded)
+
+```
 { 
   "id": "structural-00015",
   "op": "TEXTINSERT", 
@@ -268,8 +274,8 @@ Insert of a string made of more words (markup excluded)
   }]
 }
 ```
-```
 delete of a string of more words (markup excluded)
+```
 { 
   "id": "structural-00016",
   "op": "TEXTDELETE", 
@@ -286,8 +292,8 @@ delete of a string of more words (markup excluded)
 }
 ```
 ### 2.1.5. Textreplace
-```
 Replace of a string of more words (markup excluded)
+```
 { 
   "id": "structural-10015",
   "op": "TEXTREPLACE", 
@@ -309,9 +315,13 @@ Replace of a string of more words (markup excluded)
 }
 ```
 
-## 2.2. Operazioni sul markup
+## 2.2. Markup operations
+
+The markup operations are operations over more various markup nodes. Sometimes only the markup is modified, or even the text close to the markup. Each operations has been paired with the inverse.
 
 ### 2.2.1. NOOP
+
+In the markup languages syntax NOOPs are mechanical modification without any real effect. For instance changes in attribute orders or adding/removing whitespaces in a text node. 
 
 ```
 Non-relevant change within markup 
@@ -350,9 +360,8 @@ Non-relevant change within text
 ```
 
 ### 2.2.2. Insert / Delete
-
-```
 Insert of one or more nodes in the document (eventually also text before/after nodes)
+```
 { 
   "id": "structural-00017",
   "op": "INSERT",
@@ -383,8 +392,7 @@ Insert of one or more nodes in the document (eventually also text before/after n
 }
 ```
 ```
-
-Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo prima e/o dopo ai nodi
+Delete of one or more nodes in the document (eventually also text before/after nodes)
 { 
   "id": "structural-00018",
   "op": "DELETE", 
@@ -415,6 +423,7 @@ Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo pr
 }
 ```
 ### 2.2.3. Move
+Move of one or more nodes from a place to another within the document. The operations MUST NOT be close in time. It is a move onlt if the DEL and the INS content are equal but the position are different.
 
 ```
 { 
@@ -439,6 +448,8 @@ Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo pr
 
 ### 2.2.4. Wrap / Unwrap
 
+Nesting of one or more nodes with another one. The content does not change, but it changes of a single level
+
 ```
 { 
   "id": "structural-00022",
@@ -459,6 +470,7 @@ Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo pr
   }]
 }
 ```
+Delete of a single node with promotion of its content at the same level of the removed node. The content does not change, it goes up of a level.
 ```
 { 
   "id": "structural-00023",
@@ -482,6 +494,8 @@ Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo pr
 
 ### 2.2.5. Join / Split
 
+The union of two same-type sibling nodes. The joint node take the characteristics of the first of the two nodes. The one of the second node are lost.
+
 ```
 { 
   "id": "structural-00026",
@@ -498,4 +512,204 @@ Eliminazione di uno o più nodi nel documento, più, eventualmente, del testo pr
 }
 ```
 
+The separation of a node into two same-type sibling nodes. Both nodes take the caracteristics of the joint node.
+```
+{ 
+  "id": "structural-00018",
+  "op": "SPLIT", 
+  "old": "First[...]paragraph.",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00073",
+        "op":"INS", 
+        "pos": 512, 
+        "content": "</p><p>" 
+  }]
+}
+```
 ### 2.2.6. Replace
+
+The substitution of a node with another one without changing the content. Where appropriate the attributes of the old node are preserved. The position and the node MUST be the same.
+
+```
+{ 
+  "id": "structural-00030",
+  "op": "REPLACE", 
+  "old": "<li>The content of this list item</li>",
+  "by": "Fabio Vitali",
+  "timestamp": "2018-03-10T07:25:23.891Z", 
+  "items": [{ 
+        "id" : "edit-00076",
+        "op":"DEL", 
+        "pos": 623, 
+        "content": "<li>" 
+  },{ 
+        "id" : "edit-00077",
+        "op":"DEL", 
+        "pos": 645, 
+        "content": "</li>" 
+  },{ 
+        "id" : "edit-00078",
+        "op":"INS", 
+        "pos": 623, 
+        "content": "<p>" 
+  },{ 
+        "id" : "edit-00079",
+        "op":"INS", 
+        "pos": 645, 
+        "content": "</p>" 
+  }]
+}
+```
+
+# 3. Semantic operations
+
+Semantic operations are all the (sequences of) operations in which it is easy to give an immediate and comprehensible meaning for a human beings. The distinction is intuitive, intrinsecally imprecise. So, it subjective to interpretations. Moreover, it is not that simply to determine a definitive and precise list of useable categories.
+
+The majority of structural operations have a simple meaning, so it is meaningless to group them in overstructures. For this reason, the semantic characterization will be used only few times for grouping.
+
+## 3.1. Colorazione semantica di operazioni strutturali
+
+### 3.1.1. Fix
+
+The Fixes are those structural operations that solve an error.
+
+Sono correzioni quelle operazioni strutturali che risolvono un errore. Questo errore può essere grammaticale (un typo), strutturale (un paragrafo normale dentro ad una lista puntata) o concettuale (un'immagine senza didascalia) ma rappresenta sempre una transizione da uno stato considerabile come erroneo ad uno stato considerabile come corretto o più corretto. Qualunque operazione strutturale può essere considerata come una correzione. Ovviamente anche le edit wakes contengono una sequenza di correzioni, ma nello specifico contesto di riaggiustare progressivamente un errore (grammaticale) causato da una modifica vera precedente. 
+
+```
+{
+  "id": "semantic-00001",
+  "op": "FIX",
+  "new": "Some words are better than others",
+  "old": "Some words is better than others",
+  "items": { 
+    "id": "structural-00033",
+    "op": "WORDREPLACE",
+    "by": "Fabio Vitali",
+    "timestamp": "2018-10-10T07:25:23.891Z", 
+    "items": [{ 
+      "id" : "edit-00083",
+      "op":"DEL", 
+      "pos": 215, 
+      "content": "is" 
+    },{ 
+      "id" : "edit-00084",
+      "op":"INS", 
+      "pos": 215, 
+      "content": "are" 
+    }]
+  }
+}
+```
+```
+{
+  "id": "semantic-00002",
+  "op": "FIX",
+  "new": "<p>The content of this list item</p>",
+  "old": "<li>The content of this list item</li>",
+  "items": { 
+    "id": "structural-00034",
+    "op": "REPLACE", 
+    "by": "Fabio Vitali",
+    "timestamp": "2018-03-10T07:25:23.891Z", 
+    "items": [{ 
+      "id" : "edit-00085",
+      "op":"DEL", 
+      "pos": 623, 
+      "content": "<li>" 
+    },{ 
+      "id" : "edit-00086",
+      "op":"DEL", 
+      "pos": 645, 
+      "content": "</li>" 
+    },{ 
+      "id" : "edit-00087",
+      "op":"INS", 
+      "pos": 623, 
+      "content": "<p>" 
+    },{ 
+      "id" : "edit-00088",
+      "op":"INS", 
+      "pos": 645, 
+      "content": "</p>" 
+    }]
+  }
+}
+```
+
+### 3.1.2. Style
+
+Sono cambi stilistici quelle operazioni strutturali che cambiano aspetto e/o contenuto del documento senza cambiarne il significato. Un cambio d'aspetto può essere una modifica di markup, oppure la sostituzione di una parola con un sinonimo, o anche un cambiamento di punteggiatura. 
+
+```
+{
+  "id": "semantic-00003",
+  "op": "STYLE",
+  "new": "<b>some text</b>",
+  "old": "some text",
+  "items":{ 
+    "id": "structural-00024",
+    "op": "WRAP", 
+    "by": "Fabio Vitali",
+    "timestamp": "2018-10-10T07:26:23.891Z", 
+    "items": [{
+        "id" : "edit-00089",
+        "op":"INS", 
+        "pos": 235, 
+        "content": "<b>" 
+    },{ 
+        "id" : "edit-00090",
+        "op":"INS", 
+        "pos": 255, 
+        "content": "</b>" 
+    }]
+  }
+}
+```
+
+```
+{
+  "id": "semantic-00005",
+  "op": "STYLE",
+  "new": "John, Jack, and Bob",
+  "old": "John, Jack and Bob",
+  "items": { 
+    "id": "structural-00026",
+    "op": "PUNCTUATION", 
+    "by": "Fabio Vitali",
+    "timestamp": "2018-03-10T07:28:28.891Z", 
+    "items": [{ 
+      "id" : "edit-00093",
+      "op":"INS", 
+      "pos": 623, 
+      "content": "," 
+    }]
+  }
+}
+```
+
+### 3.1.3. Meaning
+
+In teoria, questa categoria è riservata alle sole operazioni che cambiano concretamente il significato del testo, come "Oggi è una bella giornata" e "Oggi non è una bella giornata". In pratica, questa è una categoria residuale: ogni modifica a cui non possiamo attribuire un'altra categoria viene interpretata come un cambio di significato, incluso "Oggi è una giornata di tempo sereno". 
+```
+{
+  "id": "semantic-00006",
+  "op": "MEANING",
+  "new": "Oggi non è una bella giornata",
+  "old": "Oggi è una bella giornata",
+  "items":{ 
+    "id": "structural-00027",
+    "op": "TEXTINSERT", 
+    "by": "Fabio Vitali",
+    "timestamp": "2018-10-10T07:31:23.891Z", 
+    "items": [{
+        "id" : "edit-00094",
+        "op":"INS", 
+        "pos": 312, 
+        "content": "non " 
+    }]
+  }
+}
+```
+
