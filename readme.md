@@ -573,9 +573,7 @@ The majority of structural operations have a simple meaning, so it is meaningles
 
 ### 3.1.1. Fix
 
-The Fixes are those structural operations that solve an error.
-
-Sono correzioni quelle operazioni strutturali che risolvono un errore. Questo errore può essere grammaticale (un typo), strutturale (un paragrafo normale dentro ad una lista puntata) o concettuale (un'immagine senza didascalia) ma rappresenta sempre una transizione da uno stato considerabile come erroneo ad uno stato considerabile come corretto o più corretto. Qualunque operazione strutturale può essere considerata come una correzione. Ovviamente anche le edit wakes contengono una sequenza di correzioni, ma nello specifico contesto di riaggiustare progressivamente un errore (grammaticale) causato da una modifica vera precedente. 
+The Fixes are a group structural operations that solve an error. It can be either a typo, structural, or conceptual.
 
 ```
 {
@@ -640,7 +638,7 @@ Sono correzioni quelle operazioni strutturali che risolvono un errore. Questo er
 
 ### 3.1.2. Style
 
-Sono cambi stilistici quelle operazioni strutturali che cambiano aspetto e/o contenuto del documento senza cambiarne il significato. Un cambio d'aspetto può essere una modifica di markup, oppure la sostituzione di una parola con un sinonimo, o anche un cambiamento di punteggiatura. 
+Style modifications are stylistic changes in aspect and/or content withotu changing the meaning. It can be a change in markup, or the substitution of a word with a synonym.
 
 ```
 {
@@ -691,7 +689,8 @@ Sono cambi stilistici quelle operazioni strutturali che cambiano aspetto e/o con
 
 ### 3.1.3. Meaning
 
-In teoria, questa categoria è riservata alle sole operazioni che cambiano concretamente il significato del testo, come "Oggi è una bella giornata" e "Oggi non è una bella giornata". In pratica, questa è una categoria residuale: ogni modifica a cui non possiamo attribuire un'altra categoria viene interpretata come un cambio di significato, incluso "Oggi è una giornata di tempo sereno". 
+This category is reserved to the only operations that change concretely the meaning of the text, such as "Today is a good day" and "Today is not a good day".
+
 ```
 {
   "id": "semantic-00006",
